@@ -9,8 +9,6 @@ public class Paciente extends Persona{
         this.eps = eps;
         this.enfermedad = enfermedad;
     }
-
-
     public String clasificarEdad() {
         String clasificado = "sin clasificar";
         if (this.edad >= 21 && this.edad <= 30) {
@@ -22,19 +20,15 @@ public class Paciente extends Persona{
         }
         return clasificado;
     }
-
     public String getEps() {
         return eps;
     }
-
     public void setEps(String eps) {
         this.eps = eps;
     }
-
     public String getEnfermedad() {
         return enfermedad;
     }
-
     public void setEnfermedad(String enfermedad) {
         this.enfermedad = enfermedad;
     }
