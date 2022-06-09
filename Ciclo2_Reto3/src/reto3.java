@@ -1,61 +1,44 @@
 import model.Paciente;
 
-import java.util.Scanner;
+import java.util.*;
 
 public class reto3 {
     public static void main(String[] args) {
         Scanner lector = new Scanner(System.in);
         int cantidadPacientes = Integer.parseInt(lector.nextLine());
         Paciente[] listaPacientes = new Paciente[cantidadPacientes];
-        for (int i = 0; i < cantidadPacientes; i++) {
-            Scanner datosSeparados = new Scanner(lector.nextLine()).useDelimiter("-");
-            Paciente persona = new Paciente();
-            persona.setNombre(datosSeparados.next());
-            persona.setCedula(Long.parseLong(datosSeparados.next()));
-            persona.setEdad(Integer.parseInt(datosSeparados.next()));
-            persona.setCiudad(datosSeparados.next());
-            persona.setEps(datosSeparados.next());
-            persona.setEnfermedad(datosSeparados.next());
-            listaPacientes[i] = persona;
+        Map<String, Integer> ciudadesMap = new LinkedHashMap<String, Integer>();
 
-        }
-        boolean flag = true;
-        int k = 0; //variable para indexar nuevas ciudades.
-        String[] ciudades = new String[cantidadPacientes]; //arreglo de ciudades únicas
-        for (int i = 0; i < listaPacientes.length; i++) {
-            flag = true;
-            for (int j = 0; j < ciudades.length; j++) {
-                if (listaPacientes[i].getCiudad().equalsIgnoreCase(ciudades[j])) {
-                    flag = false;
-                }
-            }
-            if (flag) {
-                ciudades[k] = listaPacientes[i].getCiudad();
-                k++;
+        for (int i = 0; i < cantidadPacientes; i++) {
+            String[] datos = lector.nextLine().split("-");
+            Paciente persona = new Paciente(
+                    datos[0],Long.parseLong(datos[1]), Integer.parseInt(datos[2]),
+                    datos[3], datos[4], datos[5]);
+            listaPacientes[i] = persona;
+            //verificar si la ciudad hace parte del Map de ciudades.
+            if (ciudadesMap.containsKey(persona.getCiudad())) {
+                int counter = ciudadesMap.get(persona.getCiudad()) + 1;
+                ciudadesMap.replace(persona.getCiudad(), counter); //reemplaza valor de contador
+            } else {
+                ciudadesMap.put(persona.getCiudad(), 1); //indexa nueva ciudad con contador en 1
             }
         }
-        int[] contadorCiudades = new int[ciudades.length];
-        for (int i = 0; i < ciudades.length; i++) {
-            for (int j = 0; j < listaPacientes.length; j++) {
-                if(listaPacientes[j].getCiudad().equalsIgnoreCase(ciudades[i])){
-                    contadorCiudades[i] ++;
-                }
+
+        //imprime pacientes por ciudades
+        for (String key : ciudadesMap.keySet()) {
+            System.out.println(key + " " + ciudadesMap.get(key));
+        }
+
+        //imprime primera ciudad con menor cantidad de pacientes
+        int min = Collections.min(ciudadesMap.values());
+        for(String key : ciudadesMap.keySet()){
+            if (ciudadesMap.get(key) == min) {
+                System.out.println(key);
+                break;
             }
         }
-        for (int i = 0; i < ciudades.length; i++) {
-            if(ciudades[i] != null) {
-                System.out.println(ciudades[i] + " " + contadorCiudades[i]);
-            }
-        }
-        int menorCantidad = contadorCiudades[0];
-        int indiceMenorCantidad = 0;
-        for (int i = 0; i < contadorCiudades.length; i++) {
-            if (contadorCiudades[i] < menorCantidad && contadorCiudades[i] != 0) {
-                menorCantidad = contadorCiudades[i];
-                indiceMenorCantidad = i;
-            }
-        }
-        System.out.println(ciudades[indiceMenorCantidad]);
+
+        //imprime pacientes de tercera edad
         for (int i = 0; i < listaPacientes.length; i++) {
             if (listaPacientes[i].clasificarEdad().equalsIgnoreCase("Tercera edad")) {
                 System.out.println(listaPacientes[i].getNombre() + " " + listaPacientes[i].getCedula());

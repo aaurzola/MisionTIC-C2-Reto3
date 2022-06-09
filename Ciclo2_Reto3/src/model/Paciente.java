@@ -4,6 +4,13 @@ public class Paciente extends Persona{
     private String eps;
     private String enfermedad;
 
+    public Paciente(String nombre, Long cedula, int edad, String ciudad, String eps, String enfermedad) {
+        super(nombre, cedula, edad, ciudad);
+        this.eps = eps;
+        this.enfermedad = enfermedad;
+    }
+
+
     public String clasificarEdad() {
         String clasificado = "sin clasificar";
         if (this.edad >= 21 && this.edad <= 30) {

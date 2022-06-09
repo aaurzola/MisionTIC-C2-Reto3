@@ -6,6 +6,14 @@ public class Persona {
     protected int edad;
     protected String ciudad;
 
+
+    public Persona(String nombre, long cedula, int edad, String ciudad) {
+        this.nombre = nombre;
+        this.cedula = cedula;
+        this.edad = edad;
+        this.ciudad = ciudad;
+    }
+
     public String getNombre() {
         return nombre;
     }
