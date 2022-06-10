@@ -20,6 +20,11 @@ public class Paciente extends Persona{
         }
         return clasificado;
     }
+
+    public String toString(char delimiter){
+        return (this.nombre + delimiter + this.cedula + delimiter + this.edad + delimiter + this.ciudad + delimiter + this.eps + delimiter + this.enfermedad);
+    }
+
     public String getEps() {
         return eps;
     }

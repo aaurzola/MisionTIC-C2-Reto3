@@ -6,7 +6,7 @@ public class reto3 {
     public static void main(String[] args) {
         Scanner lector = new Scanner(System.in);
         int cantidadPacientes = Integer.parseInt(lector.nextLine());
-        Paciente[] listaPacientes = new Paciente[cantidadPacientes];
+        Paciente[] paciente = new Paciente[cantidadPacientes];
         Map<String, Integer> ciudadesMap = new LinkedHashMap<String, Integer>();
 
         for (int i = 0; i < cantidadPacientes; i++) {
@@ -14,7 +14,7 @@ public class reto3 {
             Paciente persona = new Paciente(
                     datos[0],Long.parseLong(datos[1]), Integer.parseInt(datos[2]),
                     datos[3], datos[4], datos[5]);
-            listaPacientes[i] = persona;
+            paciente[i] = persona;
             //verificar si la ciudad hace parte del Map de ciudades.
             if (ciudadesMap.containsKey(persona.getCiudad())) {
                 int counter = ciudadesMap.get(persona.getCiudad()) + 1;
@@ -39,9 +39,9 @@ public class reto3 {
         }
 
         //imprime pacientes de tercera edad
-        for (int i = 0; i < listaPacientes.length; i++) {
-            if (listaPacientes[i].clasificarEdad().equalsIgnoreCase("Tercera edad")) {
-                System.out.println(listaPacientes[i].getNombre() + " " + listaPacientes[i].getCedula());
+        for (int i = 0; i < paciente.length; i++) {
+            if (paciente[i].clasificarEdad().equalsIgnoreCase("Tercera edad")) {
+                System.out.println(paciente[i].getNombre() + " " + paciente[i].getCedula());
             }
         }
     }
