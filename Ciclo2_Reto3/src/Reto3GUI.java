@@ -49,6 +49,9 @@ public class Reto3GUI extends JFrame{
         this.pack();
 
         //event listeners
+
+        //TODO create eventListeners for buttons and inputs
+        //TODO create validations for user interactions
         addBtn.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
