@@ -1,6 +1,7 @@
 import model.Paciente;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.*;
 import java.util.*;
 
@@ -31,6 +32,17 @@ public class Reto3GUI extends JFrame{
     private JButton randomUserBtn;
     private JLabel counterLbl;
     private JButton resetBtn;
+
+    //global functions
+    public void formNeedsData() {
+        if (nombreTxt.getText().isEmpty() || cedulaTxt.getText().isEmpty() || edadTxt.getText().isEmpty() ||
+                ciudadTxt.getText().isEmpty() || epsTxt.getText().isEmpty() ||
+                illnessCmb.getSelectedItem().equals("Seleccionar")) {
+            addBtn.setEnabled(false); // at least one data is still not filled nor selected
+        } else {
+            addBtn.setEnabled(true); //all form data filled
+        }
+    }
 
     public Reto3GUI(String title) {
         super(title); //calls super constructor
@@ -91,13 +103,6 @@ public class Reto3GUI extends JFrame{
                 addBtn.setEnabled(false);
                 resetBtn.setEnabled(true);
                 processBtn.setEnabled(true);
-            }
-        });
-        nombreTxt.addFocusListener(new FocusAdapter() {
-            @Override
-            public void focusLost(FocusEvent e) {
-                super.focusLost(e);
-//                JOptionPane.showMessageDialog(null, "test");
             }
         });
         randomUserBtn.addMouseListener(new MouseAdapter() {
@@ -171,7 +176,6 @@ public class Reto3GUI extends JFrame{
             public void actionPerformed(ActionEvent e) {
                 listDataUsersModel.clear();
                 listResultModel.clear();
-//                resetBtn.setEnabled(false);
                 processBtn.setEnabled(false);
                 addBtn.setEnabled(false);
                 counterLbl.setText("0");
@@ -189,15 +193,11 @@ public class Reto3GUI extends JFrame{
             @Override
             public void focusLost(FocusEvent e) {
                 super.focusLost(e);
-                if ((nombreTxt.getText().equalsIgnoreCase("") ||
-                        cedulaTxt.getText().equalsIgnoreCase("") ||
-                        edadTxt.getText().equalsIgnoreCase("") ||
-                        ciudadTxt.getText().equalsIgnoreCase("") ||
-                        epsTxt.getText().equalsIgnoreCase("") ||
-                        illnessCmb.getSelectedItem().equals("Seleccionar"))) {
-                    addBtn.setEnabled(false); // at least one data is still not filled nor selected
+                formNeedsData();
+                if(nombreTxt.getText().equalsIgnoreCase("1")){
+                    nombreTxt.setForeground(Color.red);
                 } else {
-                    addBtn.setEnabled(true); //all form data filled
+                    nombreTxt.setForeground(Color.black);
                 }
             }
         });
@@ -205,79 +205,34 @@ public class Reto3GUI extends JFrame{
             @Override
             public void focusLost(FocusEvent e) {
                 super.focusLost(e);
-                if ((nombreTxt.getText().equalsIgnoreCase("") ||
-                        cedulaTxt.getText().equalsIgnoreCase("") ||
-                        edadTxt.getText().equalsIgnoreCase("") ||
-                        ciudadTxt.getText().equalsIgnoreCase("") ||
-                        epsTxt.getText().equalsIgnoreCase("") ||
-                        illnessCmb.getSelectedItem().equals("Seleccionar"))) {
-                    addBtn.setEnabled(false); // at least one data is still not filled nor selected
-                } else {
-                    addBtn.setEnabled(true); //all form data filled
-                }
+                formNeedsData();
             }
         });
         edadTxt.addFocusListener(new FocusAdapter() {
             @Override
             public void focusLost(FocusEvent e) {
                 super.focusLost(e);
-                if ((nombreTxt.getText().equalsIgnoreCase("") ||
-                        cedulaTxt.getText().equalsIgnoreCase("") ||
-                        edadTxt.getText().equalsIgnoreCase("") ||
-                        ciudadTxt.getText().equalsIgnoreCase("") ||
-                        epsTxt.getText().equalsIgnoreCase("") ||
-                        illnessCmb.getSelectedItem().equals("Seleccionar"))) {
-                    addBtn.setEnabled(false); // at least one data is still not filled nor selected
-                } else {
-                    addBtn.setEnabled(true); //all form data filled
-                }
+                formNeedsData();
             }
         });
         ciudadTxt.addFocusListener(new FocusAdapter() {
             @Override
             public void focusLost(FocusEvent e) {
                 super.focusLost(e);
-                if ((nombreTxt.getText().equalsIgnoreCase("") ||
-                        cedulaTxt.getText().equalsIgnoreCase("") ||
-                        edadTxt.getText().equalsIgnoreCase("") ||
-                        ciudadTxt.getText().equalsIgnoreCase("") ||
-                        epsTxt.getText().equalsIgnoreCase("") ||
-                        illnessCmb.getSelectedItem().equals("Seleccionar"))) {
-                    addBtn.setEnabled(false); // at least one data is still not filled nor selected
-                } else {
-                    addBtn.setEnabled(true); //all form data filled
-                }
+                formNeedsData();
             }
         });
         epsTxt.addFocusListener(new FocusAdapter() {
             @Override
             public void focusLost(FocusEvent e) {
                 super.focusLost(e);
-                if ((nombreTxt.getText().equalsIgnoreCase("") ||
-                        cedulaTxt.getText().equalsIgnoreCase("") ||
-                        edadTxt.getText().equalsIgnoreCase("") ||
-                        ciudadTxt.getText().equalsIgnoreCase("") ||
-                        epsTxt.getText().equalsIgnoreCase("") ||
-                        illnessCmb.getSelectedItem().equals("Seleccionar"))) {
-                    addBtn.setEnabled(false); // at least one data is still not filled nor selected
-                } else {
-                    addBtn.setEnabled(true); //all form data filled
-                }
+                formNeedsData();
             }
         });
         illnessCmb.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if ((nombreTxt.getText().equalsIgnoreCase("") ||
-                        cedulaTxt.getText().equalsIgnoreCase("") ||
-                        edadTxt.getText().equalsIgnoreCase("") ||
-                        ciudadTxt.getText().equalsIgnoreCase("") ||
-                        epsTxt.getText().equalsIgnoreCase("") ||
-                        illnessCmb.getSelectedItem().equals("Seleccionar"))) {
-                    addBtn.setEnabled(false); // at least one data is still not filled nor selected
-                } else {
-                    addBtn.setEnabled(true); //all form data filled
-                }
+                formNeedsData();
             }
         });
     }
