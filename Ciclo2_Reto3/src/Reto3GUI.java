@@ -33,113 +33,50 @@ public class Reto3GUI extends JFrame{
     private JLabel counterLbl;
     private JButton resetBtn;
 
-    //global functions
-    public void formNeedsData() {
-        if (nombreTxt.getText().isEmpty() || cedulaTxt.getText().isEmpty() || edadTxt.getText().isEmpty() ||
-                ciudadTxt.getText().isEmpty() || epsTxt.getText().isEmpty() ||
-                illnessCmb.getSelectedItem().equals("Seleccionar")) {
-            addBtn.setEnabled(false); // at least one data is still not filled nor selected
-        } else {
-            addBtn.setEnabled(true); //all form data filled
-        }
-    }
+    //global variables
+    DefaultListModel listDataUsersModel = new DefaultListModel();
+    DefaultListModel listResultModel = new DefaultListModel();
+    ArrayList<Paciente> paciente = new ArrayList<Paciente>();
+    Map<String, Integer> ciudadesMap = new LinkedHashMap<String, Integer>();
 
-    public void allowOnlyNumbers(KeyEvent e) {
-        char car = e.getKeyChar();
-        if(Character.isDigit(car)){
+    //dataset for user randomizer
+    String[] randomNames = new String[] {
+            "Cornelia", "Peggy", "Christopher", "Peter", "Gertrude", "Francis",
+            "Richard", "Lawrence", "Lionel", "Arnold", "Julio", "Helen"}; //length = 12
+    String[] randomLastNames = new String[] {
+            "Coughlin", "Short", "Lewis", "Sanchez", "Martinez", "Lund",
+            "Blunt", "Leab", "Williams", "Burns", "Hacker", "Carraway"}; //length = 12
+    String[] randomEps = new String[] {
+            "SURA", "Sanitas", "Comfenalco", "Cafesalud", "Coomeva", "Compensar",
+            "SALUDCOLOMBIA", "Salud Total", "Solsalud", "Saludcoop", "Cruz Blanca", "Salud Colmena"}; //length = 12
+    String[] randomCities = new String[] {
+            "Inirida", "Rioacha", "Mocoa", "Armenia", "Medellin", "Barranquilla",
+            "Sincelejo", "Villavicencio", "Buracamanga", "Cartagena", "Ibague", "Pereira"}; //length = 12
+    String[] randomIllness = new String[] {"Cancer", "Cardiovasculares", "Respiratorias",
+            "Cerebrovasculares", "Hipertension", "Diabetes"}; //length 6
 
-        }else{
-            e.consume();
-        }
-    }
 
     public Reto3GUI(String title) {
         super(title); //calls super constructor
-
-        //global variables
-        DefaultListModel listDataUsersModel = new DefaultListModel();
-        DefaultListModel listResultModel = new DefaultListModel();
-        ArrayList<Paciente> paciente = new ArrayList<Paciente>();
-        Map<String, Integer> ciudadesMap = new LinkedHashMap<String, Integer>();
-
-        //dataset for user randomizer
-        String[] randomNames = new String[] {
-                "Cornelia", "Peggy", "Christopher", "Peter", "Gertrude", "Francis",
-                "Richard", "Lawrence", "Lionel", "Arnold", "Julio", "Helen"}; //length = 12
-        String[] randomLastNames = new String[] {
-                "Coughlin", "Short", "Lewis", "Sanchez", "Martinez", "Lund",
-                "Blunt", "Leab", "Williams", "Burns", "Hacker", "Carraway"}; //length = 12
-        String[] randomEps = new String[] {
-                "SURA", "Sanitas", "Comfenalco", "Cafesalud", "Coomeva", "Compensar",
-                "SALUDCOLOMBIA", "Salud Total", "Solsalud", "Saludcoop", "Cruz Blanca", "Salud Colmena"}; //length = 12
-        String[] randomCities = new String[] {
-                "Inirida", "Rioacha", "Mocoa", "Armenia", "Medellin", "Barranquilla",
-                "Sincelejo", "Villavicencio", "Buracamanga", "Cartagena", "Ibague", "Pereira"}; //length = 12
-        String[] randomIllness = new String[] {"Cancer", "Cardiovasculares", "Respiratorias",
-                "Cerebrovasculares", "Hipertension", "Diabetes"}; //length 6
 
         //misc for UI
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setContentPane(mainPanel);
         this.pack();
+        userList.setModel(listDataUsersModel);
 
         //event listeners
         addBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Paciente persona = new Paciente(nombreTxt.getText(), Long.parseLong(cedulaTxt.getText()),
-                        Integer.parseInt(edadTxt.getText()), ciudadTxt.getText(), epsTxt.getText(),
-                        (String) illnessCmb.getSelectedItem());
-                paciente.add(persona);
-                listDataUsersModel.addElement(persona.toString('-'));
-                userList.setModel(listDataUsersModel);
-
-                //verificar si la ciudad hace parte del Map de ciudades.
-                if (ciudadesMap.containsKey(persona.getCiudad())) {
-                    int counter = ciudadesMap.get(persona.getCiudad()) + 1;
-                    ciudadesMap.replace(persona.getCiudad(), counter); //reemplaza valor de contador
-                } else {
-                    ciudadesMap.put(persona.getCiudad(), 1); //indexa nueva ciudad con contador en 1
-                }
-                nombreTxt.setText("");
-                cedulaTxt.setText("");
-                edadTxt.setText("");
-                ciudadTxt.setText("");
-                epsTxt.setText("");
-                illnessCmb.setSelectedItem("Seleccionar");
-                counterLbl.setText(String.valueOf(listDataUsersModel.size()));
-                addBtn.setEnabled(false);
-                resetBtn.setEnabled(true);
-                processBtn.setEnabled(true);
+                addPerson();
             }
         });
         randomUserBtn.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
-                Random rand = new Random();
-
-                //random fore name and last name
-                nombreTxt.setText(randomNames[rand.nextInt(12)] + " " + randomLastNames[rand.nextInt(12)]);
-
-                //random ID number
-                long random_int = (int)Math.floor(Math.random() * (1200000000 - 1100000000 + 1) + 1100000000);
-                cedulaTxt.setText(String.valueOf(random_int));
-
-                //random age
-                edadTxt.setText(String.valueOf(21 + rand.nextInt(80)));
-
-                //random city
-                ciudadTxt.setText(randomCities[rand.nextInt(12)]);
-
-                //random Health Promotion Agency
-                epsTxt.setText(randomEps[rand.nextInt(12)]);
-
-                //random illness
-                illnessCmb.setSelectedItem(randomIllness[rand.nextInt(5)]);
-
-                //enable addBtn
-                addBtn.setEnabled(true);
+                formRandomizer();
             }
         });
         processBtn.addActionListener(new ActionListener() {
@@ -202,11 +139,6 @@ public class Reto3GUI extends JFrame{
             public void focusLost(FocusEvent e) {
                 super.focusLost(e);
                 formNeedsData();
-                if(nombreTxt.getText().equalsIgnoreCase("1")){
-                    nombreTxt.setForeground(Color.red);
-                } else {
-                    nombreTxt.setForeground(Color.black);
-                }
             }
         });
         cedulaTxt.addFocusListener(new FocusAdapter() {
@@ -260,6 +192,73 @@ public class Reto3GUI extends JFrame{
         });
     }
 
+    private void formRandomizer() {
+        Random rand = new Random();
+        //random fore name and last name
+        nombreTxt.setText(randomNames[rand.nextInt(12)] + " " + randomLastNames[rand.nextInt(12)]);
+        //random ID number
+        long random_int = (int)Math.floor(Math.random() * (1200000000 - 1100000000 + 1) + 1100000000);
+        cedulaTxt.setText(String.valueOf(random_int));
+        //random age
+        edadTxt.setText(String.valueOf(21 + rand.nextInt(80)));
+        //random city
+        ciudadTxt.setText(randomCities[rand.nextInt(12)]);
+        //random Health Promotion Agency
+        epsTxt.setText(randomEps[rand.nextInt(12)]);
+        //random illness
+        illnessCmb.setSelectedItem(randomIllness[rand.nextInt(5)]);
+        //enable addBtn
+        addBtn.setEnabled(true);
+    }
+
+    private void addPerson() {
+        Paciente persona = new Paciente(nombreTxt.getText(), Long.parseLong(cedulaTxt.getText()),
+                Integer.parseInt(edadTxt.getText()), ciudadTxt.getText(), epsTxt.getText(),
+                (String) illnessCmb.getSelectedItem());
+        paciente.add(persona);
+        listDataUsersModel.addElement(persona.toString('-'));
+
+        //verificar si la ciudad hace parte del Map de ciudades.
+        if (ciudadesMap.containsKey(persona.getCiudad())) {
+            int counter = ciudadesMap.get(persona.getCiudad()) + 1;
+            ciudadesMap.replace(persona.getCiudad(), counter); //reemplaza valor de contador
+        } else {
+            ciudadesMap.put(persona.getCiudad(), 1); //indexa nueva ciudad con contador en 1
+        }
+        resetForm();
+    }
+
+    private void resetForm() {
+        nombreTxt.setText("");
+        cedulaTxt.setText("");
+        edadTxt.setText("");
+        ciudadTxt.setText("");
+        epsTxt.setText("");
+        illnessCmb.setSelectedItem("Seleccionar");
+        counterLbl.setText(String.valueOf(listDataUsersModel.size()));
+        addBtn.setEnabled(false);
+        resetBtn.setEnabled(true);
+        processBtn.setEnabled(true);
+    }
+
+    public void formNeedsData() {
+        if (nombreTxt.getText().isEmpty() || cedulaTxt.getText().isEmpty() || edadTxt.getText().isEmpty() ||
+                ciudadTxt.getText().isEmpty() || epsTxt.getText().isEmpty() ||
+                illnessCmb.getSelectedItem().equals("Seleccionar")) {
+            addBtn.setEnabled(false); // at least one data is still not filled nor selected
+        } else {
+            addBtn.setEnabled(true); //all form data filled
+        }
+    }
+
+    public void allowOnlyNumbers(KeyEvent e) {
+        char car = e.getKeyChar();
+        if(Character.isDigit(car)){
+
+        }else{
+            e.consume();
+        }
+    }
 
     public static void main(String[] args) {
         JFrame frame = new Reto3GUI("Reto3 Alejandro Urzola");

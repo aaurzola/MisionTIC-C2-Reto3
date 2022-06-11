@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="Ciclo2_Reto3:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/Ciclo2_Reto3_jar</output-path>
+    <root id="archive" name="Ciclo2_Reto3.jar">
+      <element id="module-output" name="Ciclo2_Reto3" />
+    </root>
+  </artifact>
+</component>
