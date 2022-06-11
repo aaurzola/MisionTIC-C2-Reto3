@@ -281,7 +281,7 @@
             <children>
               <component id="a7cd3" class="javax.swing.JButton" binding="addBtn">
                 <constraints>
-                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                  <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties>
                   <background color="-8839"/>
@@ -307,18 +307,6 @@
                   <text value="Procesar"/>
                 </properties>
               </component>
-              <component id="5b6c4" class="javax.swing.JButton" binding="randomUserBtn">
-                <constraints>
-                  <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-                </constraints>
-                <properties>
-                  <background color="-13018755"/>
-                  <borderPainted value="true"/>
-                  <contentAreaFilled value="false"/>
-                  <foreground color="-16777216"/>
-                  <text value="Generar Paciente Aleatorio"/>
-                </properties>
-              </component>
               <component id="39d71" class="javax.swing.JButton" binding="resetBtn">
                 <constraints>
                   <grid row="0" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
@@ -327,10 +315,22 @@
                   <background color="-5300440"/>
                   <borderPainted value="true"/>
                   <contentAreaFilled value="false"/>
-                  <enabled value="false"/>
+                  <enabled value="true"/>
                   <foreground color="-16777216"/>
                   <label value="Borrar Registros"/>
                   <text value="Borrar Registros"/>
+                </properties>
+              </component>
+              <component id="5b6c4" class="javax.swing.JButton" binding="randomUserBtn">
+                <constraints>
+                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <background color="-13018755"/>
+                  <borderPainted value="true"/>
+                  <contentAreaFilled value="false"/>
+                  <foreground color="-16777216"/>
+                  <text value="Generar Paciente Aleatorio"/>
                 </properties>
               </component>
             </children>
