@@ -44,6 +44,15 @@ public class Reto3GUI extends JFrame{
         }
     }
 
+    public void allowOnlyNumbers(KeyEvent e) {
+        char car = e.getKeyChar();
+        if(Character.isDigit(car)){
+
+        }else{
+            e.consume();
+        }
+    }
+
     public Reto3GUI(String title) {
         super(title); //calls super constructor
 
@@ -75,7 +84,6 @@ public class Reto3GUI extends JFrame{
         this.pack();
 
         //event listeners
-        //TODO create validations for user interactions
         addBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -233,6 +241,21 @@ public class Reto3GUI extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
                 formNeedsData();
+            }
+        });
+        edadTxt.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                super.keyTyped(e);
+                allowOnlyNumbers(e);
+            }
+        });
+
+        cedulaTxt.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                super.keyTyped(e);
+                allowOnlyNumbers(e);
             }
         });
     }
