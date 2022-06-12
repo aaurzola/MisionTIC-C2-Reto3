@@ -1,7 +1,5 @@
 import model.Paciente;
-
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.*;
 import java.util.*;
 
@@ -64,18 +62,19 @@ public class Reto3GUI extends JFrame{
         this.setContentPane(mainPanel);
         this.pack();
         userList.setModel(listDataUsersModel);
+        resultsList.setModel(listResultModel);
 
         //event listeners
         addBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                addPerson();
+                addEntry();
             }
         });
         randomUserBtn.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                super.mouseClicked(e);
+//                super.mouseClicked(e);
                 formRandomizer();
             }
         });
@@ -89,7 +88,6 @@ public class Reto3GUI extends JFrame{
                 for (String key : ciudadesMap.keySet()) {
                     listResultModel.addElement(key + " " + ciudadesMap.get(key));
                 }
-                resultsList.setModel(listResultModel);
 
                 //imprime primera ciudad con menor cantidad de pacientes
                 listResultModel.addElement(" ");
@@ -119,19 +117,10 @@ public class Reto3GUI extends JFrame{
         resetBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                listDataUsersModel.clear();
-                listResultModel.clear();
+                resetForm();
+                resetGlobalVariables();
                 processBtn.setEnabled(false);
-                addBtn.setEnabled(false);
                 counterLbl.setText("0");
-                paciente.clear();
-                ciudadesMap.clear();
-                nombreTxt.setText("");
-                cedulaTxt.setText("");
-                edadTxt.setText("");
-                ciudadTxt.setText("");
-                epsTxt.setText("");
-                illnessCmb.setSelectedItem("Seleccionar");
             }
         });
         nombreTxt.addFocusListener(new FocusAdapter() {
@@ -192,6 +181,13 @@ public class Reto3GUI extends JFrame{
         });
     }
 
+    private void resetGlobalVariables() {
+        listDataUsersModel.clear();
+        listResultModel.clear();
+        paciente.clear();
+        ciudadesMap.clear();
+    }
+
     private void formRandomizer() {
         Random rand = new Random();
         //random fore name and last name
@@ -211,7 +207,7 @@ public class Reto3GUI extends JFrame{
         addBtn.setEnabled(true);
     }
 
-    private void addPerson() {
+    private void addEntry() {
         Paciente persona = new Paciente(nombreTxt.getText(), Long.parseLong(cedulaTxt.getText()),
                 Integer.parseInt(edadTxt.getText()), ciudadTxt.getText(), epsTxt.getText(),
                 (String) illnessCmb.getSelectedItem());
@@ -226,6 +222,7 @@ public class Reto3GUI extends JFrame{
             ciudadesMap.put(persona.getCiudad(), 1); //indexa nueva ciudad con contador en 1
         }
         resetForm();
+        counterLbl.setText(String.valueOf(listDataUsersModel.size()));
     }
 
     private void resetForm() {
@@ -235,7 +232,6 @@ public class Reto3GUI extends JFrame{
         ciudadTxt.setText("");
         epsTxt.setText("");
         illnessCmb.setSelectedItem("Seleccionar");
-        counterLbl.setText(String.valueOf(listDataUsersModel.size()));
         addBtn.setEnabled(false);
         resetBtn.setEnabled(true);
         processBtn.setEnabled(true);
